@@ -1,0 +1,38 @@
+#!/usr/bin/expect
+
+spawn /install/crashplan/crashplan-install/install.sh
+set count 0
+while {$count < 200 } {
+  expect {
+    "Press enter to continue with installation" {
+        send "\r";
+    } "Press enter to read the EULA." {
+        send "\r";
+    } "More--" {
+        send " ";
+    } "Do you accept and agree to be bound by the EULA" {
+        send "yes\r";
+    } "What parent directory do you wish to install CrashPlan into" {
+        send "/usr/local\r";
+    } "does not exist.  Create" {
+        send "\r";
+    } "What directory do you wish to link the CrashPlan executable to" {
+        send "/usr/local/bin\r";
+    } "What directory do you wish to store incoming backup data" {
+        send "/mnt/backup\r";
+    } "What directory contains your SYSV init scripts?" {
+        send "\r";
+    } "What directory contains your runlevel init links" {
+        send "\r";
+    } "Is this correct" {
+        send "\r";
+    } "Press Enter to complete installation." {
+        send "\r";
+    } eof {
+                #break
+        exit
+    }
+  }
+  set count [expr $count+1];
+}
+
